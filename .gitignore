@@ -1,0 +1,5 @@
+*.sdf
+*/obj/
+*/bin/
+*/.vs/
+*.opensdf
