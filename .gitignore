@@ -2,4 +2,6 @@
 */obj/
 */bin/
 */.vs/
+*.opendb
+*.db
 *.opensdf

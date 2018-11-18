@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{858F833F-DE19-4CEF-803B-10FDFBC3CB7C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>OSGCookExample</RootNamespace>
+    <RootNamespace>OSGCh08Ex08</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -165,10 +165,12 @@
     <ClCompile Include="common.cpp" />
     <ClCompile Include="libutil.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ManipulatorTravel.cpp" />
     <ClCompile Include="PickHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h" />
+    <ClInclude Include="ManipulatorTravel.h" />
     <ClInclude Include="PickHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

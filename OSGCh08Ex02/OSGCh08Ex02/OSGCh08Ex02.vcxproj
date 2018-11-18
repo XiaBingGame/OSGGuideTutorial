@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{858F833F-DE19-4CEF-803B-10FDFBC3CB7C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>OSGCookExample</RootNamespace>
+    <RootNamespace>OSGCh08Ex02</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
