@@ -91,7 +91,7 @@ int main(int argc, char** argv)
 	osg::ref_ptr<osg::Group> root = new osg::Group();
 
 	//读取贴图文件
-	osg::ref_ptr<osg::Image> image = osgDB::readImageFile("Images/primitives.gif");
+	osg::ref_ptr<osg::Image> image = osgDB::readImageFile("Images/smoke.rgb");
 	osg::ref_ptr<osg::Node> node = createNode();
 
 	//创建状态集对象
