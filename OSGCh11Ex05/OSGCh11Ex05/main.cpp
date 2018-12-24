@@ -42,17 +42,18 @@ osg::ref_ptr<osg::Group> createMyParticleScene()
 	osgParticle::Particle ptemplate;
 	ptemplate.setLifeTime(2);
 	ptemplate.setSizeRange(osgParticle::rangef(0.75f, 3.0f));
-	ptemplate.setAlphaRange(osgParticle::rangef(0.0f, 1.0f));
+	ptemplate.setAlphaRange(osgParticle::rangef(1.0f, 1.0f));
 	ptemplate.setColorRange(osgParticle::rangev4(
-		osg::Vec4(1.0f, 0.5f, 0.3f, 1.0f),
-		osg::Vec4(0.0f, 0.7f, 1.0f, 0.0f)));
+		osg::Vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		osg::Vec4(1.0f, 1.0f, 1.0f, 1.0f)));
 	ptemplate.setRadius(0.05f);
 	ptemplate.setMass(0.05f);
 
 	// 粒子系统
 	osg::ref_ptr<osgParticle::ParticleSystem> ps = new osgParticle::ParticleSystem;
 	// 设置材质
-	ps->setDefaultAttributes("Images/smoke.rgb", false, false);
+	// ps->setDefaultAttributes("Images/smoke.rgb", false, false);
+	ps->setDefaultAttributes("", false, false);
 	ps->setDefaultParticleTemplate(ptemplate);
 
 	// 放射器
@@ -84,12 +85,12 @@ osg::ref_ptr<osg::Group> createMyParticleScene()
 	// 操作器
 	osg::ref_ptr<osgParticle::AccelOperator> ap = new osgParticle::AccelOperator;
 	ap->setToGravity(1.0f);
-	program->addOperator(ap.get());
+	// program->addOperator(ap.get());
 	osg::ref_ptr<osgParticle::FluidFrictionOperator> ffo = new osgParticle::FluidFrictionOperator;
 	ffo->setFluidToAir();
-	program->addOperator(ffo.get());
+	// program->addOperator(ffo.get());
 
-	root->addChild(program.get());
+	// root->addChild(program.get());
 
 	osg::ref_ptr<osgParticle::ParticleSystemUpdater> psu = new osgParticle::ParticleSystemUpdater;
 	psu->addParticleSystem(ps.get());

@@ -1,4 +1,22 @@
 # OpenSceneGraph 三维渲染编程指南学习代码
+====================================================
+
+03.01
+公告板
+    - 创建几何体, 设置纹理
+    - 设置公告板
+
+03.02
+位置变换节点
+    - osg::PositionAttitudeTransform
+
+03.03
+矩阵变换节点
+    - osg::MatrixTransform
+
+03.04
+自动对齐节点
+    - osg::AutoTransform
 
 08.01
 * ClipPlane 裁剪平面

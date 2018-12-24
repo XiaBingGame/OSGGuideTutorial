@@ -79,6 +79,9 @@ int main(int argc, char** argv)
 	viewer->setUpViewInWindow(100, 100, 800, 600);
 	viewer->realize();
 
-	viewer->run();
+
+	while (!viewer->done()) 
+		viewer->frame();
+	//viewer->run();
 	return 0;
 }
