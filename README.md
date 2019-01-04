@@ -5,18 +5,63 @@
 公告板
     - 创建几何体, 设置纹理
     - 设置公告板
+    - osg::StateSet::setMode(): 设置混合, 光照
+    - osg::Billboard
 
 03.02
 位置变换节点
     - osg::PositionAttitudeTransform
+        - setPosition
+        - setScale
+        - addChild
 
 03.03
 矩阵变换节点
-    - osg::MatrixTransform
+    - osg::MatrixTransform: 继承自 osg::Transform
+        - setMatrix
+        - addChild
+    - osg::Matrix
+        - makeTranslate
+        - makeRotate
 
 03.04
 自动对齐节点
-    - osg::AutoTransform
+    - osg::AutoTransform: 朝向屏幕, 朝向相机
+        - setAutoRotateMode
+        - setAutoScaleToScreen
+        - setMinimumScale
+        - setMaximumScale
+        - setPosition
+    - osgText::Text 为 osg::Drawable
+        - setFont()
+        - setFontResolution()
+        - setCharacterSize()
+        - setAlignment()
+        - setAxisAlignment()
+
+03.05
+开关节点
+    - osg::Switch: 继承自 osg::Group
+        - addChild()
+
+03.06
+细节层次节点
+    - osg::LOD: 继承自 osg::Group, 两种中心模式
+        - addChild
+
+03.07
+分页细节层次节点
+    - osg::PagedLOD: 继承自 osg::LOD, osg::LOD 节点存在于一个文件中, osg::PagedLOD 每个节点都是磁盘的文件, 节点只提供索引的作用
+        - setCenter
+        - setFileName
+        - setRange
+
+03.08
+替代节点
+    - osgSim::Impostor
+
+03.11
+浅拷贝
 
 08.01
 * ClipPlane 裁剪平面
