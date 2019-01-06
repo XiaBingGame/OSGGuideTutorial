@@ -32,7 +32,7 @@
     - getTriangles()
 
 ### 04.07 三角带绘制
-* osgUtil::TriStripVisitor 继承自 osgUtil::BaseOptimizerVisitor
+* osgUtil::TriStripVisitor 继承自 osgUtil::BasOptimizerVisitor
     - void stripify() --- 对几何体进行简化
     - void apply()
 
