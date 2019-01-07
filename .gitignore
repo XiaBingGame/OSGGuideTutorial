@@ -1,7 +1,7 @@
 *.sdf
-*/obj/
-*/bin/
-*/.vs/
+*obj/
+*bin/
+*.vs/
 *.opendb
 *.db
 *.opensdf

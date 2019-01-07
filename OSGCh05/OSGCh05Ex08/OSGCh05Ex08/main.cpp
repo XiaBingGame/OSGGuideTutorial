@@ -85,7 +85,7 @@ public:
 			const osg::Matrix C = osg::Matrix::rotate(q.inverse());
 
 			//设置纹理矩阵
-			_texMat.setMatrix(C*R);
+			 _texMat.setMatrix(C*R);
 		}
 
 		traverse(node, nv);
@@ -174,10 +174,12 @@ osg::ref_ptr<osg::Node> createSkyBox()
 
 	//设置变换
 	osg::ref_ptr<osg::Transform> transform = new MoveEarthySkyWithEyePointTransform();
+	// 使用该变换避免出了立方体之外
 	transform->setCullingActive(false);
 	transform->addChild(geode.get());
 
 	osg::ref_ptr<osg::ClearNode> clearNode = new osg::ClearNode;
+	// 更新时会更新纹理矩阵
 	clearNode->setCullCallback(new TexMatCallback(*tm));
 	clearNode->addChild(transform.get());
 

@@ -238,7 +238,7 @@ int main(int argc, char** argv)
 	unsigned char* ptr = new unsigned char[totalSize];
 
 	//设置image的尺寸大小，数据及数据格式
-	image->setImage(256, 256, 256, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, ptr, osg::Image::USE_NEW_DELETE, 1);
+	image->setImage(256, 256, 1, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, ptr, osg::Image::USE_NEW_DELETE, 1);
 
 	//将偏移地址传入imge对象
 	image->setMipmapLevels(mipmapData);

@@ -177,7 +177,7 @@ osg::ref_ptr<osg::Node> createPreRenderSubGraph(osg::ref_ptr<osg::Node> subgraph
 		osg::ref_ptr<osg::Camera> camera = new osg::Camera;
 
 		//设置背景色及清除颜色和深度缓存
-		camera->setClearColor(osg::Vec4(0.1f, 0.1f, 0.3f, 1.0f));
+		camera->setClearColor(osg::Vec4(0.6f, 0.6f, 0.3f, 1.0f));
 		camera->setClearMask(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//获得该节点的范围盒
