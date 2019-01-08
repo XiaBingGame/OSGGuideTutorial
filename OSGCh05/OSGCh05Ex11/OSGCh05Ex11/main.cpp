@@ -213,9 +213,7 @@ osg::ref_ptr<osg::StateSet> createState()
 int main(int argc, char** argv)
 {
 	osg::ref_ptr<osgViewer::Viewer> viewer = new osgViewer::Viewer();
-
 	osg::ref_ptr<osg::Group> root = new osg::Group();
-
 	osg::ref_ptr<osg::Node> node = createNode();
 
 	//创建状态属性对象
@@ -224,7 +222,6 @@ int main(int argc, char** argv)
 
 	//使用三维纹理
 	node->setStateSet(stateset.get());
-
 	root->addChild(node.get());
 
 	//优化场景数据

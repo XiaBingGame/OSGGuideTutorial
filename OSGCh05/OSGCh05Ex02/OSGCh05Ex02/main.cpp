@@ -74,6 +74,9 @@ osg::ref_ptr<osg::StateSet> createTexture2DState(osg::ref_ptr<osg::Image> image)
 	texture->setDataVariance(osg::Object::DYNAMIC);
 	//设置贴图
 	texture->setImage(image.get());
+	texture->setFilter(osg::Texture::MIN_FILTER, osg::Texture::NEAREST);
+	//texture->setFilter(osg::Texture::MIN_FILTER, osg::Texture::LINEAR_MIPMAP_LINEAR);
+	texture->setFilter(osg::Texture::MAG_FILTER, osg::Texture::NEAREST);
 
 	stateset->setTextureAttributeAndModes(0, texture.get(), osg::StateAttribute::ON);
 	//启用混合
@@ -91,7 +94,7 @@ int main(int argc, char** argv)
 	osg::ref_ptr<osg::Group> root = new osg::Group();
 
 	//读取贴图文件
-	osg::ref_ptr<osg::Image> image = osgDB::readImageFile("Images/smoke.rgb");
+	osg::ref_ptr<osg::Image> image = osgDB::readImageFile("Images/screenshot.jpg");
 	osg::ref_ptr<osg::Node> node = createNode();
 
 	//创建状态集对象
