@@ -67,3 +67,22 @@
 ### 05.11 三维纹理
 * 这里用四张图像组成一个三维纹理
 * 使用自定义的 graphicscontext, 理由为何待研究
+
+### 05.12 简单光源
+* osg::Light 类派生自 osg::StateAttribute 类, 继承了对模式与属性参数信息的操作接口. 在 osg::light 类中通过 apply(State&state)函数将灯光的状态参数信息应用到OpenGL的状态机中
+* osg::LightSource 类派生自 osg::Group 类, 将灯光作为一个节点可以加入到场景图中进行渲染.
+    - void setReferenceFrame(ReferenceFrame rf) // 设置帧引用
+        - 帧引用有两个枚举变量: RELATIVE_RF(相对帧引用), ABSOLUTE_RF(绝对帧引用)
+    - 推荐在场景的顶部使用绝对的光源
+* 法线的重缩放, 可以改善光照结果的明亮
+    osg::StateSet* state = geode->getOrCreateStateSet();
+    state->setMode(GL_RESCALE_NORMAL, osg::StateAttribute::ON);
+* 自动单元化法线
+    osg::StateSet* state = geode->getOrCreateStateSet();
+    state->setMode(GL_NORMALIZE, osg::StateAttribute::ON);
+* 允许根节点的光照以及两个光源
+    osg::StateSet* state = root->getOrCreateStateSet();
+    state->setMode(GL_LIGHTING, osg::StateAttribute::ON);
+    state->setMode(GL_LIGHT0, osg::StateAttribute::ON);
+    state->setMode(GL_LIGHT1, osg::StateAttribute::ON);
+* 使用 osg::Light 设置光的属性, osg::LightSource 添加该对象
