@@ -52,9 +52,9 @@
 * osg::Geometry
     - setSupportsDisplayList(false): 可设置是否支持显示列表
 * 设置使用 VBO
-    - osg::Geometry::setVertexArray
-    - osg::Vec3Array::setVertexBufferObject
-    - osg::Geometry::setUseVertexBufferObjects
+    - osg::Geometry::setVertexArray  
+    - osg::Vec3Array::setVertexBufferObject  
+    - osg::Geometry::setUseVertexBufferObjects  
 * 创建相机, 将其渲染到纹理(RTT)
     - osg::Camera
         - 设置清空背景颜色, 清空标识, 参考帧, 视口, 渲染目标实现
@@ -75,16 +75,16 @@
         - 帧引用有两个枚举变量: RELATIVE_RF(相对帧引用), ABSOLUTE_RF(绝对帧引用)
     - 推荐在场景的顶部使用绝对的光源
 * 法线的重缩放, 可以改善光照结果的明亮
-    osg::StateSet* state = geode->getOrCreateStateSet();
-    state->setMode(GL_RESCALE_NORMAL, osg::StateAttribute::ON);
+    osg::StateSet* state = geode->getOrCreateStateSet();  
+    state->setMode(GL_RESCALE_NORMAL, osg::StateAttribute::ON);  
 * 自动单元化法线
-    osg::StateSet* state = geode->getOrCreateStateSet();
-    state->setMode(GL_NORMALIZE, osg::StateAttribute::ON);
+    osg::StateSet* state = geode->getOrCreateStateSet();  
+    state->setMode(GL_NORMALIZE, osg::StateAttribute::ON);  
 * 允许根节点的光照以及两个光源
-    osg::StateSet* state = root->getOrCreateStateSet();
-    state->setMode(GL_LIGHTING, osg::StateAttribute::ON);
-    state->setMode(GL_LIGHT0, osg::StateAttribute::ON);
-    state->setMode(GL_LIGHT1, osg::StateAttribute::ON);
+    osg::StateSet* state = root->getOrCreateStateSet();  
+    state->setMode(GL_LIGHTING, osg::StateAttribute::ON);  
+    state->setMode(GL_LIGHT0, osg::StateAttribute::ON);  
+    state->setMode(GL_LIGHT1, osg::StateAttribute::ON);  
 * 使用 osg::Light 设置光的属性, osg::LightSource 添加该对象
 
 ### 05.13 聚光灯
