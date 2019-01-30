@@ -90,5 +90,33 @@
 ### 05.13 聚光灯
 * 创建一张图像, 自中心逐渐衰减
     - osg::Image::data() 得到数据
+* 创建动画路径: osg::AnimationPath
+    - 设置循环模式 setLoopMode
+    - 插入控制点(时间, 位置, 旋转) insert
+* osg::MatrixTransform 可以设置矩阵变换, 例如
+```
+positioned->setMatrix(osg::Matrix::translate(-bs.center())*
+	osg::Matrix::scale(size, size, size)*
+	osg::Matrix::rotate(osg::inDegrees(180.0f), 0.0f, 0.0f, 2.0f));
+```
+* osg::MatrixTransform 可以设置更新回调为 osg::AnimationPathCallback 以实现路径动画
+* 使用网格高度域创建高低不平的平面 osg::HeightField 
+* osg::TexGenNode 用于创建一个节点, 可以自动生成纹理坐标
+    - osg::TexGen 设置纹理坐标生成方法
+        - setMode 和 setPlanesFromMatrix
+* osg::Texture2D 可以设置边框颜色, wrap 
+* osg::StateSet 可以用 setTextureMode 设置某个纹理单元的模式, 如纹理每个方向的生成是否打开
+* 本例设置的是点光源, 所以没有聚光灯的效果, 要实现聚光灯的效果, 需要通过创建第二个纹理的方式实现, 在目标处自动生成纹理坐标
 
 ### 05.14 材质
+* osg::Material 派生自 osg::StateAttribute 类, 其封装了 OpenGL 的 glMaterial() 和 glColorMaterial() 函数
+* 设置节点的材质属性, 首先创建一个 osg::Material, 而后设置颜色和其他参数, 在关联到场景图形的 StateSet 中
+```
+osg::StateSet* state = node->getOrCreateStateSet();
+osg::ref_ptr<osg::Material> mat = new osg::Material;
+state->setAttribute(mat.get());
+```
+* 几个枚举类型: Face, ColorMode
+* 要颜色跟踪材质需要调用 setColorMode()(内部应该是 glColorMaterial 函数), 不需要客户使用 setAttributeAndeModes() 来控制 GL_COLOR_MATERIAL
+* 代码设置 osg::Material 属性
+* 程序看起来是用了默认光照

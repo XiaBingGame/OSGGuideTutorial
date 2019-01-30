@@ -71,7 +71,7 @@ osg::ref_ptr<osg::StateSet> createSpotLightDecoratorState(unsigned int lightNum,
 
 	//设置中心的颜色和环境光的颜色
 	osg::Vec4 centerColour(1.0f, 1.0f, 1.0f, 1.0f);
-	osg::Vec4 ambientColour(0.05f, 0.05f, 0.05f, 1.0f);
+	osg::Vec4 ambientColour(0.5f, 0.5f, 0.5f, 1.0f);
 
 	//创建聚光灯纹理
 	osg::ref_ptr<osg::Texture2D> texture = new osg::Texture2D();
@@ -124,7 +124,7 @@ osg::ref_ptr<osg::Node> createSpotLightNode(const osg::Vec3& position, const osg
 	texgen->setPlanesFromMatrix(osg::Matrixd::lookAt(position, position + direction, up)*
 		osg::Matrixd::perspective(angle, 1.0, 0.1, 100));
 
-	group->addChild(texgenNode.get());
+	// group->addChild(texgenNode.get());
 
 	return group.get();
 }
@@ -236,7 +236,7 @@ osg::ref_ptr<osg::Node> createMovingModel(const osg::Vec3& center, float radius)
 			osg::Matrix::rotate(osg::inDegrees(180.0f), 0.0f, 0.0f, 2.0f));
 
 		positioned->addChild(cessna.get());
-
+		
 		osg::ref_ptr<osg::MatrixTransform> xform = new osg::MatrixTransform;
 		xform->setUpdateCallback(new osg::AnimationPathCallback(animationPath, 0.0f, 2.0));
 		xform->addChild(positioned);
@@ -266,7 +266,7 @@ osg::ref_ptr<osg::Node> createModel()
 	osg::ref_ptr<osg::Group> root = new osg::Group;
 
 	//设置状态属性
-	root->setStateSet(createSpotLightDecoratorState(0, 1));
+	// root->setStateSet(createSpotLightDecoratorState(0, 1));
 
 	//添加子节点
 	root->addChild(shadower.get());
