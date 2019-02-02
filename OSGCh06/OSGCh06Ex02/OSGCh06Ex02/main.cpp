@@ -1,3 +1,4 @@
+#include <windows.h>
 #include <iostream>
 #include <osg/Notify>
 #include <osg/MatrixTransform>
