@@ -32,8 +32,9 @@ int main(int argc, char** argv)
 	osg::ref_ptr<osg::Group> root = new osg::Group();
 
 	osg::ref_ptr<osgParticle::PrecipitationEffect> pe = new osgParticle::PrecipitationEffect;
-	pe->snow(0.5);
-	viewer->getCamera()->setClearColor(pe->getFog()->getColor());
+	//pe->snow(0.5);
+	pe->rain(1.0);
+	//viewer->getCamera()->setClearColor(pe->getFog()->getColor());
 
 	//¶ÁÈ¡Ä£ÐÍ
 	osg::ref_ptr<osg::Node> node = osgDB::readNodeFile("lz.osg");

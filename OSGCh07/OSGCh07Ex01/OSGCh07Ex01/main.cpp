@@ -65,7 +65,7 @@ int main(int argc, char** argv)
 	osg::ref_ptr<osgViewer::Viewer> viewer = new osgViewer::Viewer;
 	
 	osg::ref_ptr<osg::Group> root = new osg::Group;
-	osg::ref_ptr<osg::Node> node = osgDB::readNodeFile("glider.osg");
+	osg::ref_ptr<osg::Node> node = osgDB::readNodeFile("yulei_lxj.3DS");
 
 	root->addChild(node.get());
 	
@@ -77,11 +77,21 @@ int main(int argc, char** argv)
 	output_file << "Vertex size: " << size << std::endl;
 
 	std::vector<osg::Vec3>::iterator iter = vv.extracted_verts->begin();
+	double tx = 0.0;
+	double ty = 0.0;
+	double tz = 0.0;
 	while (iter != vv.extracted_verts->end())
 	{
 		output_file << (*iter).x() << " " << (*iter).y() << " " << (*iter).z() << std::endl;
+		tx += (*iter).x();
+		ty += (*iter).y();
+		tz += (*iter).z();
 		iter++;
 	}
+	tx /= vv.extracted_verts->size();
+	ty /= vv.extracted_verts->size();
+	tz /= vv.extracted_verts->size();
+	output_file << "center points: " << tx << ", " << ty << ", " << tz << std::endl;
 
 	system("pause");
 	return 0;

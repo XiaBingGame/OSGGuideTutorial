@@ -15,7 +15,7 @@ bool CPickHandler::handle(const osgGA::GUIEventAdapter& ea,osgGA::GUIActionAdapt
 		{
 			osg::ref_ptr<osgViewer::Viewer> viewer = dynamic_cast<osgViewer::Viewer*>(&aa);
 			//得到视图矩阵
-			viewer ->getCamera() ->getViewMatrixAsLookAt(position, center, up) ;
+			viewer ->getCamera()->getViewMatrixAsLookAt(position, center, up) ;
 			if (viewer)
 			{	
 				//执行PICK动作

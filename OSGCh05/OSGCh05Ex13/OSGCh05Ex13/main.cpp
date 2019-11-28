@@ -124,7 +124,7 @@ osg::ref_ptr<osg::Node> createSpotLightNode(const osg::Vec3& position, const osg
 	texgen->setPlanesFromMatrix(osg::Matrixd::lookAt(position, position + direction, up)*
 		osg::Matrixd::perspective(angle, 1.0, 0.1, 100));
 
-	// group->addChild(texgenNode.get());
+	group->addChild(texgenNode.get());
 
 	return group.get();
 }

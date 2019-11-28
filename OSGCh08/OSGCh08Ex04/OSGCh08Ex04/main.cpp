@@ -20,6 +20,8 @@
 #include <osgText/Font>
 #include <osgText/Text>
 
+#include <osg/ShapeDrawable>
+
 #include <osgViewer/Viewer>
 #include <iostream>
 
@@ -50,6 +52,7 @@ void singleWindowMultipleCameras(osg::ref_ptr<osgViewer::Viewer> viewer)
 	traits->windowDecoration = true;
 	traits->doubleBuffer = true;
 	traits->sharedContext = 0;
+	traits->samples = 4;
 
 	//创建图形环境
 	osg::ref_ptr<osg::GraphicsContext> gc = osg::GraphicsContext::createGraphicsContext(traits.get());
@@ -106,16 +109,21 @@ int main(int argc, char** argv)
 	osg::ref_ptr<osgViewer::Viewer> viewer = new osgViewer::Viewer();
 
 	//读取牛的模型
+
 	osg::ref_ptr<osg::Node> cow = osgDB::readNodeFile("cow.osg");
+
+	osg::ref_ptr<osg::Geode> geode = new osg::Geode;
+	geode->addDrawable(new osg::ShapeDrawable(new osg::Box(osg::Vec3(0.0f, 0.0f, 0.0f), 2)));
 
 	//启用单视图多相机渲染
 	singleWindowMultipleCameras(viewer.get());
 
 	//优化场景数据
 	osgUtil::Optimizer optimizer;
-	optimizer.optimize(cow.get());
+	optimizer.optimize(geode.get());
 
-	viewer->setSceneData(cow.get());
+	viewer->setSceneData(geode.get());
+	//viewer->setUpViewInWindow(50, 50, 800, 600);
 
 	viewer->realize();
 

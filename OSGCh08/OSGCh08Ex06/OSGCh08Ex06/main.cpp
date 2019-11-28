@@ -5,6 +5,7 @@
 #include <osg/PositionAttitudeTransform>
 #include <osg/Geometry>
 #include <osg/Geode>
+#include <osg/ShapeDrawable>
 
 #include <osgUtil/Optimizer>
 
@@ -37,15 +38,24 @@ int main(int argc, char** argv)
 	int yoffset = 200;
 
 	//视图一的节点
-	osg::ref_ptr<osg::Node> viewer1Node = osgDB::readNodeFile("cessna.osg");
+	//osg::ref_ptr<osg::Node> viewer1Node = osgDB::readNodeFile("cessna.osg");
+	//osg::ref_ptr<osg::Node> viewer1Node = osgDB::readNodeFile("cessna.osg");
+	//geode->addDrawable(new osg::ShapeDrawable(new osg::Box(osg::Vec3(0.0f, 0.0f, 0.0f), 2)));
+	osg::ref_ptr<osg::Geode> geode1 = new osg::Geode;
+	geode1->addDrawable(new osg::ShapeDrawable(new osg::Box(osg::Vec3(0.0f, 0.0f, 0.0f), 2)));
+
+	osg::ref_ptr<osg::Geode> geode2 = new osg::Geode;
+	geode2->addDrawable(new osg::ShapeDrawable(new osg::Box(osg::Vec3(0.0f, 0.0f, 0.0f), 2)));
+
+
 
 	//视图二的节点
-	osg::ref_ptr<osg::Node> viewer2Node = osgDB::readNodeFile("cow.osg");
+	//osg::ref_ptr<osg::Node> viewer2Node = osgDB::readNodeFile("cow.osg");
 
 	//优化场景数据
 	osgUtil::Optimizer optimizer;
-	optimizer.optimize(viewer1Node.get());
-	optimizer.optimize(viewer2Node.get());
+	optimizer.optimize(geode1.get());
+	optimizer.optimize(geode2.get());
 
 	//视图窗口一
 	{
@@ -58,6 +68,7 @@ int main(int argc, char** argv)
 		traits->windowDecoration = true;
 		traits->doubleBuffer = true;
 		traits->sharedContext = 0;
+		traits->samples = 4;
 
 		//创建图形环境
 		osg::ref_ptr<osg::GraphicsContext> gc = osg::GraphicsContext::createGraphicsContext(traits.get());
@@ -74,7 +85,7 @@ int main(int argc, char** argv)
 		camera1->setReadBuffer(buffer);
 
 		//设置场景数据
-		viewer1->setSceneData(viewer1Node.get());
+		viewer1->setSceneData(geode1.get());
 	}
 
 	//视图窗口二
@@ -87,6 +98,7 @@ int main(int argc, char** argv)
 		traits->windowDecoration = true;
 		traits->doubleBuffer = true;
 		traits->sharedContext = 0;
+		traits->samples = 4;
 
 		osg::ref_ptr<osg::GraphicsContext> gc = osg::GraphicsContext::createGraphicsContext(traits.get());
 
@@ -97,7 +109,7 @@ int main(int argc, char** argv)
 		camera2->setDrawBuffer(buffer);
 		camera2->setReadBuffer(buffer);
 
-		viewer2->setSceneData(viewer2Node.get());
+		viewer2->setSceneData(geode2.get());
 	}
 
 	//添加视图
