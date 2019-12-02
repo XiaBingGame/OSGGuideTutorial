@@ -14,12 +14,14 @@
     - setImage
 
 ### 05.03 多重纹理映射
+* 演示多重纹理, 第二个纹理使用了纹理坐标球面生成的方式, 并和第一重纹理进行混合
 * osg::TexGen: 设置纹理坐标生成
     - setMode --- 设置生成模式
 * osg::TexEnv: 映射模式
     - setMode --- 设置模式为混合
 
 ### 05.04 Mipmap 纹理映射示例
+* 创建一个带有 Mipmap 的图像数据, 而后将其作为纹理
 * osg::Image::MipmapDataType: 创建一个 MipmapDataType 列表, 用来存放各层图片数据的偏移地址
 * osg::Image::setMipmapLevels 可以放置上面的变量, 而后设置 Mipmap 即可
 
@@ -35,8 +37,11 @@
 
 ### 05.07 计算纹理坐标
 * 通过一个纹理坐标生成器(继承自 osg::NodeVisitor 访问器)遍历模型的所有顶点及法线, 然后根据顶点,法线及一定的比例来确定纹理坐标
+* osg::Geometry
+	- getVertexArray()
+	- getNormalArray()
 
-### 05.08 立方图纹理 (细读)
+### 05.08 立方体纹理 (细读)
 * 通过派生 Transform, 可以预先移动子节点, 这样实现相机始终位于天空盒内的效果
 * 创建一个节点回调, 可以在 Cull 回调中计算出新的纹理矩阵
 * osg::TextureCubeMap
@@ -49,16 +54,23 @@
 * osg::Transform 可以预先计算矩阵
 
 ### 05.09 渲染到纹理 (细读)
+* osg::AnimationPathCallback 根据构造函数创建动画路径回调
 * osg::Geometry
     - setSupportsDisplayList(false): 可设置是否支持显示列表
-* 设置使用 VBO
+* osg::Texture
+	- setTextureSize: 创建纹理大小
+* 学习如何使用 VBO
     - osg::Geometry::setVertexArray  
     - osg::Vec3Array::setVertexBufferObject  
-    - osg::Geometry::setUseVertexBufferObjects  
+    - osg::Geometry::setUseVertexBufferObjects --- 设置该几何体使用 VBO 
 * 创建相机, 将其渲染到纹理(RTT)
     - osg::Camera
         - 设置清空背景颜色, 清空标识, 参考帧, 视口, 渲染目标实现
-        - attach() --- 挂接到纹理
+        - attach() --- 挂接到纹理或图像
+		- setRenderTargetImplementation: 可设置渲染至 FBO
+		- setPostDrawCallback: 设置后期绘制回调
+* osg::Camera::DrawCallback
+	- 相机的绘制回调
 
 ### 05.10 一维纹理
 * osg::Texture1D: 一维纹理

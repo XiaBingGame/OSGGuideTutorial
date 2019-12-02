@@ -9,8 +9,8 @@
 ```
 // 方法一
 osgDB::FilePathList pathList = osgDB::getDataFilePathList();
-pathList.push_back("...");
-pathList.push_back("...");
+pathList.push_back("..."); // 添加路径1
+pathList.push_back("..."); // 添加路径2
 osgDB::setDataFilePathList(pathList);
 // 方法二
 osgDB::Registry::instance()->getDataFilePathList().push_back(newpath);
