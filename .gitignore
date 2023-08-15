@@ -1,6 +1,7 @@
 *.sdf
 *obj/
 *bin/
+*CMake/
 *.vs/
 *.opendb
 *.db

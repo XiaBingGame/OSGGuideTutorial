@@ -1,1 +1,3 @@
-矩阵变换节点
+# 矩阵变换节点
+* osg::Matrix::makeRotate
+* osg::MatrixTransform
