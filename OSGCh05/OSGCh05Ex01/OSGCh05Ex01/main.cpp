@@ -46,13 +46,13 @@ osg::ref_ptr<osg::Node> createClipNode(osg::ref_ptr<osg::Node> subgraph)
 	wireframe_subgraph->setStateSet(stateset.get());
 	wireframe_subgraph->addChild(subgraph.get());
 
-	root->addChild(wireframe_subgraph.get());
+	// root->addChild(wireframe_subgraph.get());
 	
 	osg::ref_ptr<osg::MatrixTransform> transform = new osg::MatrixTransform;
 	//更新回调，实现动态裁剪
 	// 创建一个动画, 不断改变 transform
 	osg::ref_ptr<osg::NodeCallback> nc = new osg::AnimationPathCallback(subgraph->getBound().center(), osg::Vec3(0.0f, 0.0f, 1.0f), osg::inDegrees(45.0f));
-	transform->setUpdateCallback(nc.get());
+	// transform->setUpdateCallback(nc.get());
 	
 	//创建裁剪节点
 	osg::ref_ptr<osg::ClipNode> clipnode = new osg::ClipNode;

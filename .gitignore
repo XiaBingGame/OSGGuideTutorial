@@ -2,6 +2,10 @@
 *obj/
 *bin/
 *CMake/
+*vs2015_64/
+*Debug/
+*Release/
+*.vscode/
 *.vs/
 *.opendb
 *.db

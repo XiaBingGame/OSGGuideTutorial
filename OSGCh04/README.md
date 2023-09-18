@@ -82,12 +82,11 @@ tscx->retessellatePolygons(*(geom.get()));
 * osgUtil::DelaunayTriangulator 
     - bool triangulate() --- 生成三角网格
     - void addInputeConstraint() --- 添加限制条件
-    - getTriangles()
+    - getTriangles() --- 获取三角形可绘制对象
 
-### 04.07 三角带绘制
+### 04.07 三角带化
 * osgUtil::TriStripVisitor 继承自 osgUtil::BasOptimizerVisitor
     - void stripify() --- 对几何体进行简化
-    - void apply()
 
 ### 04.08 生成顶点法线
 * osgUtil::SmoothingVisitor 继承自 osg::NodeVisitor 类

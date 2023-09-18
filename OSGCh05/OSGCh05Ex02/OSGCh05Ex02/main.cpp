@@ -166,9 +166,6 @@ osg::ref_ptr<osg::StateSet> createTexture2DState(osg::Image* image)
 
 int main(int argc, char** argv)
 {
-	render_method_1();
-	return 0;
-
 	osg::ref_ptr<osgViewer::Viewer> viewer = new osgViewer::Viewer();
 
 	osg::ref_ptr<osg::Group> root = new osg::Group();

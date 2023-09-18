@@ -25,21 +25,22 @@
 * 04.03 预定义几何体形状
 * 04.04 多边形分格化
 * 04.05 简化几何体
-* 04.06 Delaunay 三角网绘制
-* 04.07 三角带绘制
+* 04.06 Delaunay 三角化顶点数组
+* 04.07 三角带化
 * 04.08 生成顶点法线(osgUtil::SmoothingVisitor)
 
 ## 第5章 渲染状态, 纹理与光照
 ----------------------------------------------------
 [第5章详细内容](/OSGCh05/README.md)
-* 05.01 渲染状态示例(osg::AnimationPathCallback)
+* 05.01 渲染状态示例(osg::AnimationPathCallback), 同时演示了裁剪节点的使用方式
 * 05.02 二维纹理映射
 * 05.03 多重纹理映射(osg::TexGen/osg::TexEnv, 生成与混合)
-* 05.04 Mipmap 纹理映射示例
-* 05.05 TextureRectangle 纹理映射
+* 05.04 Mipmap 纹理映射示例, 演示不同 mipmap level 使用不同的图像裸数据
+* 05.05 TextureRectangle 纹理映射以及 osg::TexMat 的使用
 * 05.06 自动生成纹理坐标
 * 05.07 计算纹理坐标
-* 05.08 立方体纹理(实现天空盒,细读)
+* 05.08 立方体纹理, 通过派生 osg::Transform 和更新 osg::TexMat 实现天空盒
+(osg::Transform 的两个矩阵计算, 立方体纹理, 纹理坐标自动生成以及其对应的纹理矩阵, osg::ClearNode自动清理buffer节点, osg::Depth实现深度设置)
 * 05.09 渲染到纹理(细读)
 * 05.10 一维纹理
 * 05.11 三维纹理

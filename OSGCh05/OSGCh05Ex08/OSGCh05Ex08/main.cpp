@@ -78,6 +78,7 @@ public:
 		{
 			//得到模型视图矩阵并设置旋转角度
 			const osg::Matrix& MV = *(cv->getModelViewMatrix());
+			// 先绕 x 轴旋转90度
 			const osg::Matrix R = osg::Matrix::rotate(osg::DegreesToRadians(112.0f), 0.0f, 0.0f, 1.0f)*
 				osg::Matrix::rotate(osg::DegreesToRadians(90.0f), 1.0f, 0.0f, 0.0f);
 
@@ -85,7 +86,7 @@ public:
 			const osg::Matrix C = osg::Matrix::rotate(q.inverse());
 
 			//设置纹理矩阵
-			 _texMat.setMatrix(C*R);
+			_texMat.setMatrix(C*R);
 		}
 
 		traverse(node, nv);

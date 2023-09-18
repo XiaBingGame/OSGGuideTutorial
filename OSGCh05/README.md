@@ -1,57 +1,157 @@
 ### 05.01 渲染状态示例
-* osg::PolygonMode
+* osg::PolygonMode --- 设置多边形模式
 * osg::AnimationPathCallback: 派生自 osg::NodeCallback
     - 可以创建一个旋转动画(构造函数设置旋转的中心, 轴和旋转速度)
 * osg::ClipNode
-    - createClipBox
+    - createClipBox --- 设置裁剪盒
 * osg::MatrixTransform 设置动画(使用更新回调)
     - setUpdateCallback
+    - 添加 osg::ClipNode 然后移动它可以实现其 stateset 的变化
+* osg::Group 可以设置为一个 osg::ClipNode 所带的 osg::StateSet, 而后该 group 所添加的子节点都会应用该 ClipNode 的状态
 
 ### 05.02 二维纹理映射
 * 创建纹理对象
 * osg::Texture2D
     - setDataVariance
     - setImage
+    - setFilter
 
-### 05.03 多重纹理映射
+### 05.03 多重纹理映射/纹理生成/环境纹理
 * 演示多重纹理, 第二个纹理使用了纹理坐标球面生成的方式, 并和第一重纹理进行混合
 * osg::TexGen: 设置纹理坐标生成
     - setMode --- 设置生成模式
 * osg::TexEnv: 映射模式
     - setMode --- 设置模式为混合
+    - setColor
 
 ### 05.04 Mipmap 纹理映射示例
+* 演示不同 mipmap level 使用不同的图像裸数据
 * 创建一个带有 Mipmap 的图像数据, 而后将其作为纹理
-* osg::Image::MipmapDataType: 创建一个 MipmapDataType 列表, 用来存放各层图片数据的偏移地址
-* osg::Image::setMipmapLevels 可以放置上面的变量, 而后设置 Mipmap 即可
+* osg::Image
+    - MipmapDataType: 创建一个 MipmapDataType 列表, 用来存放各层图片数据的偏移地址
+    - setImage 根据图像裸数据设置图像
+    - setMipmapLevels 可以放置上面的变量, 而后设置 Mipmap 即可
 
 ### 05.05 TextureRectangle 纹理映射
 * 纹理坐标不需要被单元化, 纹理的大小不需要是2的幂次方, 不支持 REPEAT 环绕模式, 过滤不支持 Mipmap, 不支持纹理边框
 * osg::TexMat 设置纹理矩阵, 在纹理属性里面设置其对象
+    - setScaleByTextureRectangleSize: 设置纹理矩阵，并设置为根据矩阵纹理(TextureRectangle)的大小自动缩放
 
 ### 05.06 自动生成纹理坐标
 * osg::TexGen
     - setMode
     - setPlane
-* osg::StateSet::setTextureMode 设置 GL_TEXTURE_GEN_S, GL_TEXTURE_GEN_T
+* osg::StateSet::setTextureMode 设置 GL_TEXTURE_GEN_S, GL_TEXTURE_GEN_T 的开关模式
 
 ### 05.07 计算纹理坐标
-* 通过一个纹理坐标生成器(继承自 osg::NodeVisitor 访问器)遍历模型的所有顶点及法线, 然后根据顶点,法线及一定的比例来确定纹理坐标
+* 通过一个纹理坐标生成器(继承自 osg::NodeVisitor 访问器的派生类)遍历模型的所有顶点及法线, 然后根据顶点,法线及一定的比例来确定纹理坐标
 * osg::Geometry
 	- getVertexArray()
 	- getNormalArray()
 
-### 05.08 立方体纹理 (细读)
+### 05.08 立方体纹理
 * 通过派生 Transform, 可以预先移动子节点, 这样实现相机始终位于天空盒内的效果
 * 创建一个节点回调, 可以在 Cull 回调中计算出新的纹理矩阵
+    - 获取当前相机的模型视图矩阵 osgUtil::CullVisitor::getModelViewMatrix
+```
+// osg::NodeCallback 派生类的重载函数
+virtual void operator()(osg::Node* node, osg::NodeVisitor* nv) {
+	osgUtil::CullVisitor* cv = dynamic_cast<osgUtil::CullVisitor*>(nv);
+		if (cv)
+		{
+			//得到模型视图矩阵并设置旋转角度
+			const osg::Matrix& MV = *(cv->getModelViewMatrix());
+			// 先绕 x 轴旋转90度
+			const osg::Matrix R = osg::Matrix::rotate(osg::DegreesToRadians(112.0f), 0.0f, 0.0f, 1.0f)*
+				osg::Matrix::rotate(osg::DegreesToRadians(90.0f), 1.0f, 0.0f, 0.0f);
+
+			osg::Quat q = MV.getRotate();
+			const osg::Matrix C = osg::Matrix::rotate(q.inverse());
+
+			//设置纹理矩阵
+			_texMat.setMatrix(C*R);
+		}
+
+		traverse(node, nv);
+}
+```
+* 上面实现了纹理矩阵的求解, 主要左乘加上相机的逆矩阵, 从而实现纹理坐标跟随相机的旋转而运动
+* 四元数与矩阵的一些操作
+    - 从一个矩阵中获取四元数 osg::Matrix::getRotate
+    - 从一个四元数中获取逆矩阵 osg::Quat::inverse()
+    - 从一个四元数中获取矩阵 osg::Matrix::rotate(const osg::Quat&);
+* osg::TexEnv 设置纹理替换模式
+```
+	osg::ref_ptr<osg::TexEnv> te = new osg::TexEnv;
+	te->setMode(osg::TexEnv::REPLACE);
+	stateset->setTextureAttributeAndModes(0, te.get(), osg::StateAttribute::ON | osg::StateAttribute::OVERRIDE);
+```
+* 自动生成纹理坐标
+```
+	// NORMAL_MAP　标准模式－立方图纹理
+	// REFLECTION_MAP　反射模式－球体纹理
+	// SPHERE_MAP　球体模型－球体纹理
+	osg::ref_ptr<osg::TexGen> tg = new osg::TexGen;
+	tg->setMode(osg::TexGen::NORMAL_MAP);
+	stateset->setTextureAttributeAndModes(0, tg.get(), osg::StateAttribute::ON | osg::StateAttribute::OVERRIDE);
+
+```
+* 通过 osg::StateSet 设置纹理矩阵
+```
+	//设置纹理矩阵
+	osg::ref_ptr<osg::TexMat> tm = new osg::TexMat;
+	stateset->setTextureAttribute(0, tm.get());
+```
 * osg::TextureCubeMap
     - setImage --- 设置六个面的图像
+    - setWrap
 * osg::StateSet::setRenderBinDetails --- 设置渲染顺序
 * osg::Depth --- 设置深度属性
     - setFunction
     - setRange
-* osg::ClearNode
-* osg::Transform 可以预先计算矩阵
+* 通过深度设置远平面
+```
+	//将深度设置为远平面
+	osg::ref_ptr<osg::Depth> depth = new osg::Depth;
+	depth->setFunction(osg::Depth::ALWAYS);
+	depth->setRange(1.0, 1.0);//远平面   
+	stateset->setAttributeAndModes(depth, osg::StateAttribute::ON | osg::StateAttribute::OVERRIDE);
+
+```
+* osg::ClearNode: 可以用于清除颜色和深度缓存, 子节点设置 render bin 为 -1, 确保在其他节点绘制之前绘制.
+* osg::Transform 可以预先计算矩阵, 其子节点先应用变换, 这里通过重载函数确保变换始终在相机位置处, 主要应用世界到局部坐标, 局部坐标到世界坐标的矩阵变换.
+    - 矩阵的求解, 按照左乘矩阵的原则, 局部到世界的矩阵计算, 原有矩阵已经实现局部到世界的变换, 在前面再乘以相机的偏移实现世界坐标下的偏移
+    - 世界到局部的计算, 先把世界乘以相机的逆向偏移, 然后再乘以原有的矩阵变换. 所以需要后乘相机的逆向偏移.
+```
+//一个变换类，使天空盒绕视点旋转
+class MoveEarthySkyWithEyePointTransform : public osg::Transform
+{
+public:
+	//局部矩阵计算成世界矩阵
+	virtual bool computeLocalToWorldMatrix(osg::Matrix& matrix, osg::NodeVisitor* nv) const
+	{
+		osgUtil::CullVisitor* cv = dynamic_cast<osgUtil::CullVisitor*>(nv);
+		if (cv)
+		{
+			osg::Vec3 eyePointLocal = cv->getEyeLocal();
+			matrix.preMult(osg::Matrix::translate(eyePointLocal));
+		}
+		return true;
+	}
+
+	//世界矩阵计算为局部矩阵
+	virtual bool computeWorldToLocalMatrix(osg::Matrix& matrix, osg::NodeVisitor* nv) const
+	{
+		osgUtil::CullVisitor* cv = dynamic_cast<osgUtil::CullVisitor*>(nv);
+		if (cv)
+		{
+			osg::Vec3 eyePointLocal = cv->getEyeLocal();
+			matrix.postMult(osg::Matrix::translate(-eyePointLocal));
+		}
+		return true;
+	}
+};
+```
 
 ### 05.09 渲染到纹理 (细读)
 * osg::AnimationPathCallback 根据构造函数创建动画路径回调
