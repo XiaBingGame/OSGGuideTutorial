@@ -162,6 +162,7 @@ osg::ref_ptr<osg::Node> createPreRenderSubGraph(osg::ref_ptr<osg::Node> subgraph
 		osg::ref_ptr<osg::StateSet> stateset = new osg::StateSet;
 
 		stateset->setTextureAttributeAndModes(0, texture, osg::StateAttribute::ON);
+		stateset->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
 
 		polyGeom->setStateSet(stateset);
 

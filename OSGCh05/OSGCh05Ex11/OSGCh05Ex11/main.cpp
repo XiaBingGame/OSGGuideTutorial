@@ -118,6 +118,7 @@ private:
 osg::ref_ptr<osg::StateSet> createState()
 {
 	//创建图形环境
+	/*
 	MyGraphicsContext gc;
 	if (!gc.valid())
 	{
@@ -125,6 +126,7 @@ osg::ref_ptr<osg::StateSet> createState()
 		osg::notify(osg::NOTICE) << "Unable to create the graphics context required to build 3d image." << std::endl;
 		return 0;
 	}
+	*/
 
 	//读取四张二维纹理图像
 	osg::ref_ptr<osg::Image> image_0 = osgDB::readImageFile("Images/lz.rgb");
@@ -138,6 +140,9 @@ osg::ref_ptr<osg::StateSet> createState()
 		std::cout << "Warning: could not open files." << std::endl;
 
 		return new osg::StateSet();
+	}
+	else {
+		std::cout << "Read images success!" << std::endl;
 	}
 
 	//判断纹理格式是否一致

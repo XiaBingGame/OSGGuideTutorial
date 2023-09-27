@@ -50,6 +50,7 @@
 	- getNormalArray()
 
 ### 05.08 立方体纹理
+* 知识点: osg::Transform 的两个矩阵计算, 立方体纹理, 纹理坐标自动生成以及其对应的纹理矩阵, osg::ClearNode自动清理buffer节点, osg::Depth实现深度设置
 * 通过派生 Transform, 可以预先移动子节点, 这样实现相机始终位于天空盒内的效果
 * 创建一个节点回调, 可以在 Cull 回调中计算出新的纹理矩阵
     - 获取当前相机的模型视图矩阵 osgUtil::CullVisitor::getModelViewMatrix
@@ -153,8 +154,8 @@ public:
 };
 ```
 
-### 05.09 渲染到纹理 (细读)
-* osg::AnimationPathCallback 根据构造函数创建动画路径回调
+### 05.09 渲染到纹理
+* osg::AnimationPathCallback 根据构造函数创建动画路径回调, 用于 osg::MatrixTransform 的更新巍峨回调
 * osg::Geometry
     - setSupportsDisplayList(false): 可设置是否支持显示列表
 * osg::Texture
@@ -175,13 +176,25 @@ public:
 ### 05.10 一维纹理
 * osg::Texture1D: 一维纹理
 * osg::TexGen: 生成纹理坐标
+```
+	osg::ref_ptr<osg::TexGen> texgen = new osg::TexGen;
+	texgen->setMode(osg::TexGen::OBJECT_LINEAR);
+	texgen->setPlane(osg::TexGen::S, osg::Plane(0.0f, 0.0f, 1.0f, -10000));
+
+	//创建属性集
+	osg::ref_ptr<osg::StateSet> stateset = new osg::StateSet;
+
+
+	//启用纹理生成器
+	stateset->setTextureAttribute(0, texgen.get(), osg::StateAttribute::OVERRIDE);
+	stateset->setTextureMode(0, GL_TEXTURE_GEN_S, osg::StateAttribute::ON | osg::StateAttribute::OVERRIDE);
+```
 
 ### 05.11 三维纹理
 * 这里用四张图像组成一个三维纹理
-* 使用自定义的 graphicscontext, 理由为何待研究
 
 ### 05.12 简单光源
-* osg::Light 类派生自 osg::StateAttribute 类, 继承了对模式与属性参数信息的操作接口. 在 osg::light 类中通过 apply(State&state)函数将灯光的状态参数信息应用到OpenGL的状态机中
+* osg::Light 类派生自 osg::StateAttribute 类, 继承了对模式与属性参数信息的操作接口. 在 osg::light 类中通过 apply(State& state)函数将灯光的状态参数信息应用到OpenGL的状态机中
 * osg::LightSource 类派生自 osg::Group 类, 将灯光作为一个节点可以加入到场景图中进行渲染.
     - void setReferenceFrame(ReferenceFrame rf) // 设置帧引用
         - 帧引用有两个枚举变量: RELATIVE_RF(相对帧引用), ABSOLUTE_RF(绝对帧引用)
