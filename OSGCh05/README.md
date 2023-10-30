@@ -2,12 +2,14 @@
 * osg::PolygonMode --- 设置多边形模式
 * osg::AnimationPathCallback: 派生自 osg::NodeCallback
     - 可以创建一个旋转动画(构造函数设置旋转的中心, 轴和旋转速度)
+* osg::Node::getBound() --- 可以获取包围球
+* osg::BoundingBox::expandBy() --- 可以从包围球获取包围盒
 * osg::ClipNode
     - createClipBox --- 设置裁剪盒
 * osg::MatrixTransform 设置动画(使用更新回调)
     - setUpdateCallback
     - 添加 osg::ClipNode 然后移动它可以实现其 stateset 的变化
-* osg::Group 可以设置为一个 osg::ClipNode 所带的 osg::StateSet, 而后该 group 所添加的子节点都会应用该 ClipNode 的状态
+* osg::Group 可以设置为一个 osg::ClipNode 所带的 osg::StateSet, 而后该 group 所添加的子节点都会应用该 ClipNode 的状态, 至于之前 osg::ClipNode 节点可以添加在其他地方
 
 ### 05.02 二维纹理映射
 * 创建纹理对象
@@ -26,9 +28,10 @@
 
 ### 05.04 Mipmap 纹理映射示例
 * 演示不同 mipmap level 使用不同的图像裸数据
+* osg::Image::MipmapDataType 类型变量是一个列表, 可以保存每一级别的图像偏移位置
+* osg::Image::setImage() 设置包含裸数据的图像数据
 * 创建一个带有 Mipmap 的图像数据, 而后将其作为纹理
 * osg::Image
-    - MipmapDataType: 创建一个 MipmapDataType 列表, 用来存放各层图片数据的偏移地址
     - setImage 根据图像裸数据设置图像
     - setMipmapLevels 可以放置上面的变量, 而后设置 Mipmap 即可
 
